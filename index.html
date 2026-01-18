@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day Night Services - Order Now</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        p { font-size: 1.2em; color: #ccc; }
+        .stores { margin-top: 30px; }
+        .store { display: inline-block; background: #fff2; padding: 15px 25px; margin: 10px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🛵 Day Night Services</h1>
+    <p>24/7 Delivery - Food, Groceries & More</p>
+    
+    <div class="stores">
+        <div class="store">🥖 Pehlwan Bakery</div>
+        <div class="store">🛒 Pehlwan Grocery</div>
+        <div class="store">🍛 Karachi Foods</div>
+        <div class="store">🍕 Qaiser Pizza</div>
+        <div class="store">🧁 Huqq Bakers</div>
+        <div class="store">🍞 National Bakery</div>
+    </div>
+    
+    <p style="margin-top: 40px;">👉 Click the button in the bottom-right corner to place your order!</p>
+
+    <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" defer async></script>
+    <script>
+        window.addEventListener('load', () => {
+            window.vapiSDK.run({
+                apiKey: 'YOUR_PUBLIC_KEY',
+                assistant: '1ed45d61-494d-4007-9375-ea996a6aafc8',
+                config: { position: 'bottom-right' }
+            });
+        });
+    </script>
+</body>
+</html>
