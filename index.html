@@ -6,250 +6,19 @@
     <title>Day Night Services - 24/7 Delivery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: white;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 30px 20px;
-            background: rgba(255,255,255,0.05);
-        }
-        .header h1 { font-size: 2.5em; margin-bottom: 5px; }
-        .header h1 span { color: #ffc107; }
-        .header p { color: #aaa; font-size: 1.1em; }
-        .badge { 
-            display: inline-block; 
-            background: #4CAF50; 
-            padding: 5px 15px; 
-            border-radius: 20px; 
-            font-size: 0.85em; 
-            margin-top: 10px;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 30px 20px;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 18px 35px;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .action-btn:hover { transform: scale(1.05); }
-        .call-btn { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; }
-        .call-btn:hover { box-shadow: 0 5px 25px rgba(76, 175, 80, 0.5); }
-        .chat-btn { background: linear-gradient(135deg, #2196F3, #1565C0); color: white; }
-        .chat-btn:hover { box-shadow: 0 5px 25px rgba(33, 150, 243, 0.5); }
-
-        /* Stores Section */
-        .section-title { text-align: center; font-size: 1.5em; margin: 20px 0; color: #ffc107; }
-        
-        .stores-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 0 20px 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .store-card {
-            background: rgba(255,255,255,0.08);
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .store-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .store-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255,255,255,0.05);
-        }
-        .store-icon { font-size: 2.5em; }
-        .store-name { font-size: 1.3em; font-weight: bold; }
-        .store-type { font-size: 0.9em; color: #aaa; }
-        
-        .store-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: rgba(0,0,0,0.2);
-        }
-        .store-card.active .store-menu { max-height: 500px; }
-        
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .menu-item:last-child { border-bottom: none; }
-        .item-name { color: #eee; }
-        .item-price { color: #4CAF50; font-weight: bold; }
-
-        .click-hint {
-            padding: 10px 20px;
-            font-size: 0.85em;
-            color: #888;
-            text-align: center;
-        }
-
-        /* Offers */
-        .offers {
-            background: rgba(255,193,7,0.1);
-            border: 1px solid rgba(255,193,7,0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 0 20px 30px;
-            max-width: 1160px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .offers h3 { color: #ffc107; margin-bottom: 10px; }
-        .offers ul { list-style: none; }
-        .offers li { padding: 5px 0; }
-        .offers li i { color: #4CAF50; margin-right: 10px; }
-
-        /* Chat Modal */
-        .chat-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .chat-modal.active { display: flex; }
-        .chat-container {
-            background: #1a1a2e;
-            width: 90%;
-            max-width: 500px;
-            height: 80%;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-header {
-            background: rgba(255,255,255,0.1);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .chat-header h3 { font-size: 1.1em; }
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .message {
-            margin-bottom: 15px;
-            max-width: 80%;
-        }
-        .message.bot { 
-            background: rgba(255,255,255,0.1);
-            padding: 12px 15px;
-            border-radius: 15px 15px 15px 0;
-        }
-        .message.user {
-            background: #4CAF50;
-            padding: 12px 15px;
-            border-radius: 15px 15px 0 15px;
-            margin-left: auto;
-        }
-        .chat-input-area {
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            display: flex;
-            gap: 10px;
-        }
-        .chat-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 1em;
-        }
-        .chat-input::placeholder { color: #888; }
-        .send-btn {
-            padding: 12px 20px;
-            background: #4CAF50;
-            border: none;
-            border-radius: 25px;
-            color: white;
-            cursor: pointer;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8em; }
-            .action-btn { padding: 15px 25px; font-size: 1em; }
-            .stores-grid { grid-template-columns: 1fr; }
-        }
+        *margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff}.header{text-align:center;padding:30px 20px;background:rgba(255,255,255,0.05)}.header h1{font-size:2.5em}.header h1 span{color:#ffc107}.header p{color:#aaa}.badge{display:inline-block;background:#4CAF50;padding:5px 15px;border-radius:20px;font-size:0.85em;margin-top:10px}.action-buttons{display:flex;justify-content:center;gap:20px;padding:30px 20px;flex-wrap:wrap}.action-btn{display:flex;align-items:center;gap:10px;padding:18px 35px;font-size:1.2em;border:none;border-radius:50px;cursor:pointer;transition:0.2s}.action-btn:hover{transform:scale(1.05)}.call-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff}.chat-btn{background:linear-gradient(135deg,#2196F3,#1565C0);color:#fff}.section-title{text-align:center;font-size:1.5em;margin:20px 0;color:#ffc107}.stores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;padding:0 20px 30px;max-width:1200px;margin:0 auto}.store-card{background:rgba(255,255,255,0.08);border-radius:15px;overflow:hidden;cursor:pointer;transition:0.2s}.store-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}.store-header{padding:20px;display:flex;align-items:center;gap:15px;background:rgba(255,255,255,0.05)}.store-iconem}.store-name{font-size:1.3em;font-weight:bold}.store-typeem;color:#aaa}.store-menu{max-height:0;overflow:hidden;transition:0.3s;background:rgba(0,0,0,0.2)}.store-card.active .store-menumenu-item{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}.item-name{color:#eee}.item-price{color:#4CAF50;font-weight:bold}.click-hint{padding:10px 20px;font-size:0.85em;color:#888;text-align:center}.offers{background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:10px;padding:20px;margin:0 20px 30px;max-width:1160px;margin-left:auto;margin-right:auto}.offers h3{color:#ffc107;margin-bottom:10px}.offers ul{list-style:none}.offers li{padding:5px 0}.offers li i{color:#4CAF50;margin-right:10px}.footer{text-align:center;padding:20px;color:#666}
     </style>
 </head>
 <body>
-
-    <!-- Header -->
     <div class="header">
         <h1>🛵 Day <span>Night</span> Services</h1>
         <p>24/7 Food & Grocery Delivery</p>
         <div class="badge">🟢 Open Now - Delivering in 30-45 mins</div>
     </div>
-
-    <!-- Action Buttons -->
     <div class="action-buttons">
-        <button class="action-btn call-btn" onclick="startCall()">
-            <i class="fas fa-phone"></i> Call to Order
-        </button>
-        <button class="action-btn chat-btn" onclick="openChat()">
-            <i class="fas fa-comment"></i> Chat to Order
-        </button>
+        <button class="action-btn call-btn" id="callBtn"><i class="fas fa-phone"></i> Call to Order</button>
+        <button class="action-btn chat-btn" id="chatBtn"><i class="fas fa-comment"></i> Chat to Order</button>
     </div>
-
-    <!-- Offers -->
     <div class="offers">
         <h3>🎉 Special Offers</h3>
         <ul>
@@ -258,22 +27,10 @@
             <li><i class="fas fa-check"></i> Buy 2 Pizzas, Get 1 FREE Drink</li>
         </ul>
     </div>
-
-    <!-- Section Title -->
     <h2 class="section-title">📍 Our Partner Stores - Click to See Menu</h2>
-
-    <!-- Stores Grid -->
     <div class="stores-grid">
-        
-        <!-- Pehlwan Bakery -->
         <div class="store-card" onclick="toggleMenu(this)">
-            <div class="store-header">
-                <span class="store-icon">🥖</span>
-                <div>
-                    <div class="store-name">Pehlwan Bakery</div>
-                    <div class="store-type">Fresh Breads & Cakes</div>
-                </div>
-            </div>
+            <div class="store-header"><span class="store-icon">🥖</span><div><div class="store-name">Pehlwan Bakery</div><div class="store-type">Fresh Breads & Cakes</div></div></div>
             <div class="click-hint">👆 Tap to view menu</div>
             <div class="store-menu">
                 <div class="menu-item"><span class="item-name">Fresh Bread</span><span class="item-price">Rs. 120</span></div>
@@ -284,16 +41,8 @@
                 <div class="menu-item"><span class="item-name">Cream Roll</span><span class="item-price">Rs. 60</span></div>
             </div>
         </div>
-
-        <!-- Pehlwan Grocery -->
         <div class="store-card" onclick="toggleMenu(this)">
-            <div class="store-header">
-                <span class="store-icon">🛒</span>
-                <div>
-                    <div class="store-name">Pehlwan Grocery</div>
-                    <div class="store-type">Daily Essentials</div>
-                </div>
-            </div>
+            <div class="store-header"><span class="store-icon">🛒</span><div><div class="store-name">Pehlwan Grocery</div><div class="store-type">Daily Essentials</div></div></div>
             <div class="click-hint">👆 Tap to view menu</div>
             <div class="store-menu">
                 <div class="menu-item"><span class="item-name">Rice (1 kg)</span><span class="item-price">Rs. 280</span></div>
@@ -305,16 +54,8 @@
                 <div class="menu-item"><span class="item-name">Milk (1 L)</span><span class="item-price">Rs. 200</span></div>
             </div>
         </div>
-
-        <!-- Karachi Foods -->
         <div class="store-card" onclick="toggleMenu(this)">
-            <div class="store-header">
-                <span class="store-icon">🍛</span>
-                <div>
-                    <div class="store-name">Karachi Foods</div>
-                    <div class="store-type">Desi Cuisine</div>
-                </div>
-            </div>
+            <div class="store-header"><span class="store-icon">🍛</span><div><div class="store-name">Karachi Foods</div><div class="store-type">Desi Cuisine</div></div></div>
             <div class="click-hint">👆 Tap to view menu</div>
             <div class="store-menu">
                 <div class="menu-item"><span class="item-name">Biryani (full)</span><span class="item-price">Rs. 1200</span></div>
@@ -322,4 +63,57 @@
                 <div class="menu-item"><span class="item-name">Karahi Chicken</span><span class="item-price">Rs. 1400</span></div>
                 <div class="menu-item"><span class="item-name">Seekh Kabab (6 pcs)</span><span class="item-price">Rs. 500</span></div>
                 <div class="menu-item"><span class="item-name">Chicken Tikka</span><span class="item-price">Rs. 600</span></div>
-                <div class="menu-item"><span class="item-
+                <div class="menu-item"><span class="item-name">Naan</span><span class="item-price">Rs. 30</span></div>
+                <div class="menu-item"><span class="item-name">Raita</span><span class="item-price">Rs. 100</span></div>
+            </div>
+        </div>
+        <div class="store-card" onclick="toggleMenu(this)">
+            <div class="store-header"><span class="store-icon">🍕</span><div><div class="store-name">Qaiser Pizza</div><div class="store-type">Pizza & Fast Food</div></div></div>
+            <div class="click-hint">👆 Tap to view menu</div>
+            <div class="store-menu">
+                <div class="menu-item"><span class="item-name">Small Pizza</span><span class="item-price">Rs. 650</span></div>
+                <div class="menu-item"><span class="item-name">Medium Pizza</span><span class="item-price">Rs. 950</span></div>
+                <div class="menu-item"><span class="item-name">Large Pizza</span><span class="item-price">Rs. 1350</span></div>
+                <div class="menu-item"><span class="item-name">Fries</span><span class="item-price">Rs. 250</span></div>
+                <div class="menu-item"><span class="item-name">Garlic Bread</span><span class="item-price">Rs. 300</span></div>
+                <div class="menu-item"><span class="item-name">Cold Drink</span><span class="item-price">Rs. 120</span></div>
+                <div class="menu-item"><span class="item-name">Zinger Burger</span><span class="item-price">Rs. 450</span></div>
+            </div>
+        </div>
+        <div class="store-card" onclick="toggleMenu(this)">
+            <div class="store-header"><span class="store-icon">🧁</span><div><div class="store-name">Huqq Bakers</div><div class="store-type">Premium Desserts</div></div></div>
+            <div class="click-hint">👆 Tap to view menu</div>
+            <div class="store-menu">
+                <div class="menu-item"><span class="item-name">Fresh Cake (1 lb)</span><span class="item-price">Rs. 900</span></div>
+                <div class="menu-item"><span class="item-name">Cupcakes (6 pcs)</span><span class="item-price">Rs. 400</span></div>
+                <div class="menu-item"><span class="item-name">Brownies (4 pcs)</span><span class="item-price">Rs. 350</span></div>
+                <div class="menu-item"><span class="item-name">Cookies (dozen)</span><span class="item-price">Rs. 280</span></div>
+                <div class="menu-item"><span class="item-name">Donuts (6 pcs)</span><span class="item-price">Rs. 360</span></div>
+                <div class="menu-item"><span class="item-name">Cream Puffs</span><span class="item-price">Rs. 300</span></div>
+            </div>
+        </div>
+        <div class="store-card" onclick="toggleMenu(this)">
+            <div class="store-header"><span class="store-icon">🍞</span><div><div class="store-name">National Bakery</div><div class="store-type">Traditional Bakery</div></div></div>
+            <div class="click-hint">👆 Tap to view menu</div>
+            <div class="store-menu">
+                <div class="menu-item"><span class="item-name">Bread</span><span class="item-price">Rs. 100</span></div>
+                <div class="menu-item"><span class="item-name">Sweet Bread</span><span class="item-price">Rs. 140</span></div>
+                <div class="menu-item"><span class="item-name">Cake Rusk</span><span class="item-price">Rs. 200</span></div>
+                <div class="menu-item"><span class="item-name">Khari Biscuit</span><span class="item-price">Rs. 120</span></div>
+                <div class="menu-item"><span class="item-name">Fruit Cake</span><span class="item-price">Rs. 600</span></div>
+                <div class="menu-item"><span class="item-name">Patties (6 pcs)</span><span class="item-price">Rs. 240</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">© 2024 Day Night Services - All Rights Reserved</div>
+    <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" defer async></script>
+    <script>
+        function toggleMenu(card){document.querySelectorAll('.store-card').forEach(c=>{if(c!==card)c.classList.remove('active')});card.classList.toggle('active')}
+        window.addEventListener('load',()=>{
+            window.vapiSDK.run({apiKey:'4966d3e6-c0f9-4055-a41f-804bb25f8450',assistant:'1ed45d61-494d-4007-9375-ea996a6aafc8',config:{position:'bottom-right'}});
+            document.getElementById('callBtn').onclick=()=>{window.vapiSDK.start()};
+            document.getElementById('chatBtn').onclick=()=>{window.vapiSDK.start()};
+        });
+    </script>
+</body>
+</html>
